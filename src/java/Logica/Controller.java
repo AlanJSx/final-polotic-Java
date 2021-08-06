@@ -55,7 +55,6 @@ public class Controller {
     }
     
     public void newReservation(String dni, String name, String lastName, String adress, String career, String birthDate, String checkIn, String checkOut, int numberPeople, int numberNights, String selectedRoom, String userEmployee) {
-        System.out.println("Llego a new servation ");
         
         Guest guest = new Guest();
         Room room;
@@ -68,9 +67,6 @@ public class Controller {
         Reservation reservation = new Reservation();
         int roomId = Integer.parseInt(selectedRoom.replace(" ","")); 
         room = perControl.findRoom(roomId);
-         
-        System.out.println("Encontro esta habitacion " + room.getRoomName());
-
         
         guest.setDni(dni);
         guest.setName(name);
@@ -134,11 +130,10 @@ public class Controller {
     
     
     public void newReservationG(String dni, String checkIn, String checkOut, int numberPeople, int numberNights, String selectedRoom, String userEmployee) {
-        System.out.println("Llego a new servationG ");
         
         Guest guest; 
         guest = findGuestByDni(dni);
-        System.out.println(guest.getName());
+
         Room room;
         
         Employee employee;
@@ -149,10 +144,7 @@ public class Controller {
         Reservation reservation = new Reservation();
         int roomId = Integer.parseInt(selectedRoom.replace(" ","")); 
         room = perControl.findRoom(roomId);
-         
-        System.out.println("Encontro esta habitacion " + room.getRoomName());
-     
-        
+  
         reservation.setGuest(guest);
         reservation.setRoomId(room);
         reservation.setNumberPeople(numberPeople);
@@ -163,12 +155,7 @@ public class Controller {
         reservation.setEmployeeId(employee);
         
         perControl.newReservation(reservation);        
- 
-        
-        
+   
     }
-    
-
-    
 
 }

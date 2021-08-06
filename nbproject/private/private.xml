@@ -7,12 +7,11 @@
             <file>file:/D:/Curso%20Polotic/JAVA/TPFinalDefinitivo/final-polotic-Java/src/java/Servlets/SvNewEmployee.java</file>
             <file>file:/D:/Curso%20Polotic/JAVA/TPFinalDefinitivo/final-polotic-Java/src/java/Persistencia/PersistenceController.java</file>
             <file>file:/D:/Curso%20Polotic/JAVA/TPFinalDefinitivo/final-polotic-Java/src/java/Servlets/SvNewReservationGuest.java</file>
-            <file>file:/D:/Curso%20Polotic/JAVA/TPFinalDefinitivo/final-polotic-Java/src/java/Servlets/SvFindGuest.java</file>
+            <file>file:/D:/Curso%20Polotic/JAVA/TPFinalDefinitivo/final-polotic-Java/src/java/Persistencia/ReservationJpaController.java</file>
             <file>file:/D:/Curso%20Polotic/JAVA/TPFinalDefinitivo/final-polotic-Java/src/java/Logica/Employee.java</file>
             <file>file:/D:/Curso%20Polotic/JAVA/TPFinalDefinitivo/final-polotic-Java/src/java/Servlets/SvLoginPage.java</file>
-            <file>file:/D:/Curso%20Polotic/JAVA/TPFinalDefinitivo/final-polotic-Java/src/java/Servlets/SvReservation.java</file>
+            <file>file:/D:/Curso%20Polotic/JAVA/TPFinalDefinitivo/final-polotic-Java/src/java/Logica/Guest.java</file>
             <file>file:/D:/Curso%20Polotic/JAVA/TPFinalDefinitivo/final-polotic-Java/src/java/Logica/Controller.java</file>
-            <file>file:/D:/Curso%20Polotic/JAVA/TPFinalDefinitivo/final-polotic-Java/src/java/Logica/Reservation.java</file>
         </group>
     </open-files>
 </project-private>
