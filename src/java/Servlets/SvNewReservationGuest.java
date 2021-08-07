@@ -7,7 +7,6 @@ package Servlets;
 
 import Logica.Controller;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -87,7 +86,7 @@ public class SvNewReservationGuest extends HttpServlet {
         control.newReservation(dni, name, lastName, adress, career, birthDate, checkIn, checkOut, numberPeople, numberNights, selectedRoom, userEmployee);
         
         
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("HomePage.jsp");
     }
 
     /**

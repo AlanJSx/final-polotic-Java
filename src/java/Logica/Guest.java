@@ -28,8 +28,8 @@ public class Guest implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date birthDate;
     
-    
-
+    @OneToMany
+    List<Reservation> reservationList = new ArrayList<>();
 
     public Guest() {
     }
@@ -98,6 +98,14 @@ public class Guest implements Serializable {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public List<Reservation> getReservationList() {
+        return reservationList;
+    }
+
+    public void setReservationList(List<Reservation> reservationList) {
+        this.reservationList = reservationList;
     }
     
     

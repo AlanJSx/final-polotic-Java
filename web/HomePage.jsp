@@ -1,4 +1,7 @@
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="Logica.Reservation"%>
 <%@page import="Logica.Controller"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -9,23 +12,21 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="./assets/css/styles.css">
-    <title>Hotel HomePage</title>
+    <title>Habitaciones</title>
 </head>
-<body class="container">  
+<body class="container">   
     
-    // verificacion y alta de usuario principal
-    <%  Controller control = new Controller();
-       
-        //if (control.hotelAdministrator("admin")){
-        //    control.createHotelAdministrator();
-        //}
-             
-        control.adminUser(); 
+    <%
+        HttpSession mySession = request.getSession();
+        
+        String userLogin = (String) mySession.getAttribute("jspUser");
+        
+        if (userLogin == null){
+            response.sendRedirect("login.jsp");
+        } else { 
         
     %>
-    
-    
-    
+       
     <header>
       <!-- Background image -->
       <div
@@ -38,7 +39,7 @@
           <div class="d-flex justify-content-center align-items-center h-100">
             <div class="text-white">
               <h1 class="mb-3">Hotel</h1>
-              <h3 class="mb-3">Inicio de Sesión</h4>
+              <h3 class="mb-3">HomePage</h3>
             </div>
           </div>
         </div>
@@ -56,42 +57,48 @@
               <a class="nav-link" href="#">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Reservas</a>
+              <a class="nav-link" href="reservation.jsp">Reservas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Habitaciones</a>
+              <a class="nav-link" href="rooms.jsp">Habitaciones</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Empleados</a>
+              <a class="nav-link" href="employee.jsp">Empleados</a>
             </li>
           </ul>
         </div>
     </nav>
-
+    
 
 
     <main>
+        <h4>Reservas para el día de hoy</4>
         <div class="mx-auto">
-            <form action="SvLoginPage" method="POST" class="g-3">
+            
+                <tbody>
                 
-
-                </div>
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="usuarioJsp" class="form-label">Usuario</label>
-                        <input type="text" name="jspUser" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label for="passJsp" class="form-label">Contraseña</label>
-                        <input type="text" name="jspPassword" class="form-control">
-                    </div>
-                </div>
-
-
-
+                    <% 
+                    Controller control = new Controller();
+                    List<Reservation> reservationList = control.getReservationToday();
+                    for (Reservation reservation : reservationList){
+                        
+                        
+                        
+                   
+                    %>  
                 
-                <input id="btnConfirmar" type="submit" value="Iniciar Sesión" class="btn-primary px-4">
-            </form>
+                    <tr>   
+                        <td> <%= reservation.getReservationId() %> </td>
+                        <td> <%= reservation.getGuest().getDni() %> </td>
+                        <td> <%= reservation.getGuest().getName() + " " + reservation.getGuest().getLastName() %> </td>
+                        <td> <%= reservation.getRoomId().getIdRoom() %> </td>
+                        <td> <%= reservation.getCheckOut() %> </td>
+                    </tr> 
+                    
+                 <% } %>   
+                </tbody>
+
+
         </div>
     </main>
 
@@ -109,6 +116,7 @@
         <!-- Copyright -->
       </footer>
 
-
+    <% } %>
 </body>
 </html>
+

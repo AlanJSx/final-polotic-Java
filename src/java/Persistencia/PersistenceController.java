@@ -51,4 +51,9 @@ public class PersistenceController {
     public void newGuest(Guest guest){
         guestJpa.create(guest);
     }
+
+    public List<Reservation> getReservationList() {
+        return reservationJpa.findReservationEntities();
+    }
+
 }

@@ -2,6 +2,10 @@ package Logica;
 
 import Persistencia.PersistenceController;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -156,6 +160,69 @@ public class Controller {
         
         perControl.newReservation(reservation);        
    
+    }
+    
+
+    public void adminUser(){
+        if (!isHotelAdministrator("admin")) {
+            createHotelAdministrator();
+        }
+    }    
+        
+        
+    public boolean isHotelAdministrator(String adminUser){
+        List <User> userList = perControl.getUser();
+        if (userList.isEmpty()){
+            return false;
+        } else {
+            for (User user : userList){
+                if (user.getUserName().equals(adminUser)){
+                    return true;
+                }     
+            }
+        } 
+        return false;
+    }
+    
+    public void createHotelAdministrator(){
+        Employee employee = new Employee();
+        
+        employee.setName("Hotel Administrator");
+        employee.setLastName(" Hotel ");
+        employee.setDni("");
+        
+
+ 
+        employee.setBirthDate(Date.valueOf("2020-12-31"));
+        employee.setAdress("Hotel Street");
+        employee.setWorkPosition(" Hotel Administrator ");
+        
+        User user = new User();
+        
+        user.setUserName("admin");
+        user.setPassword("admin");
+        
+        employee.setUser(user);
+        
+        perControl.registerEmployee(employee);
+    }
+    
+    public List<Reservation> getReservationToday(){
+        List<Reservation> reservationList = perControl.getReservationList();
+        
+        List<Reservation> reservationToday = new ArrayList<>();
+        String today = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
+        System.out.println(today);
+        for (Reservation reservation : reservationList){
+            String reservationDate = new SimpleDateFormat("yyyy/MM/dd").format(reservation.getCheckIn());
+            System.out.println(reservationDate);
+            
+            if(reservationDate.equals(today)){
+                System.out.println(reservation.getReservationId());
+                reservationToday.add(reservation);
+            }
+        }
+        return reservationToday;
     }
 
 }

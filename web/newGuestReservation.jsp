@@ -25,7 +25,7 @@
         
         
         String userLogin = (String) mySession.getAttribute("jspUser");
-        
+        String dniGuest = (String) mySession.getAttribute("dniGuest");
         if (userLogin == null){
             response.sendRedirect("login.jsp");
         } else { 
@@ -87,7 +87,7 @@
                 <div class="row mb-3">
                     <div class="col">
                         <label for="dni" class="form-label">Nro. Documento</label>
-                        <input type="text" name="dni" class="form-control">
+                        <input type="text" name="dni" class="form-control" value="<%= dniGuest %>">
                     </div>
                     <div class="col">
                         <label for="birthDate" class="form-label">Fecha Nacimiento</label>
