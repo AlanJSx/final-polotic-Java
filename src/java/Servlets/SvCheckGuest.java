@@ -6,11 +6,10 @@
 package Servlets;
 
 import Logica.Controller;
+import Logica.Guest;
+import Logica.Room;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author alanl
  */
-@WebServlet(name = "SvReservation", urlPatterns = {"/SvReservation"})
-public class SvReservation extends HttpServlet {
+@WebServlet(name = "SvCheckGuest", urlPatterns = {"/SvCheckGuest"})
+public class SvCheckGuest extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -65,29 +64,35 @@ public class SvReservation extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
         
         Controller control = new Controller();
-               
         
-        String dni = (String) request.getSession().getAttribute("dniGuest");
-        String checkIn = request.getParameter("checkIn");
-        String checkOut = request.getParameter("checkOut");
-        int numberPeople = Integer.parseInt(request.getParameter("numberPeople"));
-        int numberNights = 2;  // calcular cantidad de noches
-        String selectedRoom = request.getParameter("selectedRoom");
+        String dni = request.getParameter("dni");
+        String selectRoom = (String) request.getSession().getAttribute("selectedRoom");
+        int selectRoomId = Integer.parseInt(selectRoom.replace(" ","")); 
         
-        String userEmployee = (String) request.getSession().getAttribute("jspUser");
-        
-        
-        
-        //    control.newReservationG(dni, checkIn, checkOut, numberPeople, numberNights, selectedRoom, userEmployee);
-
-        
-        response.sendRedirect("index.jsp");
+        Room selectedRoom = control.getRoom(selectRoomId);
+        request.getSession().setAttribute("selectedRoomName", selectedRoom.getRoomName());
+        if (control.findGuestDni(dni)){
+            Guest guestFound = control.getGuest(dni);
+            //boolean guestExist = true;
+            //request.getSession().setAttribute("guestExist", guestExist);
+            request.getSession().setAttribute("guestName", guestFound.getName());
+            request.getSession().setAttribute("guestLastname", guestFound.getLastName());
+            request.getSession().setAttribute("guestAdress", guestFound.getAdress());
+            request.getSession().setAttribute("guestCareer", guestFound.getCareer());
+            request.getSession().setAttribute("guestBirth", control.convertDatetoString(guestFound.getBirthDate()));
+            
+            request.getSession().setAttribute("dniGuest", dni);
+            
+            
+            response.sendRedirect("reservationGuestFound.jsp");
+        } else {
+            request.getSession().setAttribute("dniGuest", dni);
+            response.sendRedirect("reservationNewGuest.jsp");
+        }
         
     }
-    
 
     /**
      * Returns a short description of the servlet.

@@ -170,6 +170,17 @@ public class Controller {
         return false;
     }
     
+    public Guest getGuest(String dni){
+        List<Guest> guestList = perControl.getGuest();
+        
+        for (Guest guest : guestList){
+            if (guest.getDni().equals(dni)){
+                return guest;
+            }
+        }
+        return null;
+    }
+    
     public Employee findEmployeeByUser(String username){
         Employee sessionEmployee = new Employee(); 
         List<Employee> employeeList = perControl.getEmployees();
@@ -216,7 +227,9 @@ public class Controller {
   
         reservation.setGuest(guest);
         reservation.setRoomId(room);
+        //int numberPeople = Integer.parseInt(people.replace(" ","")); 
         reservation.setNumberPeople(numberPeople);
+        
         reservation.setNumberNights(numberNights);
         Date guestCheckIn = convertStrintoDate(checkIn);
         Date guestCheckOut = convertStrintoDate(checkOut);
@@ -352,12 +365,23 @@ public class Controller {
             return availableRoomList;    
         } else {
             for (Room room : roomList){
-                if(numberPeople > room.getMaxPeople()){
-                    roomList.remove(room);
+                if(numberPeople <= room.getMaxPeople()){
+                    
+                    availableRoomList.add(room);
                 }
             }
-            return roomList;   
+            return availableRoomList;   
         }                             
+    }
+
+    public Room getRoom(int id) {
+       
+        return perControl.getRoomId(id);
+        
+    }
+
+    public List<Guest> getGuestList() {
+        return perControl.getGuest();
     }
 }
   

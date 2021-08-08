@@ -77,11 +77,11 @@ public class SvNewReservationGuest extends HttpServlet {
         String adress = request.getParameter("adress");
         String career = request.getParameter("career");
         String birthDate = request.getParameter("birthDate");
-        String checkIn = request.getParameter("checkIn");
-        String checkOut = request.getParameter("checkOut");
-        int numberPeople = Integer.parseInt(request.getParameter("numberPeople"));
+        String checkIn = (String) request.getSession().getAttribute("checkIn");
+        String checkOut = (String) request.getSession().getAttribute("checkOut");
+        int numberPeople = (int) request.getSession().getAttribute("numberPeople");
         int numberNights = 2;  // calcular cantidad de noches
-        String selectedRoom = request.getParameter("selectedRoom");
+        String selectedRoom = (String) request.getSession().getAttribute("selectedRoom");
         
         String userEmployee = (String) request.getSession().getAttribute("jspUser");
        
@@ -90,7 +90,7 @@ public class SvNewReservationGuest extends HttpServlet {
         } catch (ParseException ex) {
             Logger.getLogger(SvNewReservationGuest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        response.sendRedirect("HomePage.jsp");
+        response.sendRedirect("reservationComplete.jsp");
 
 
         

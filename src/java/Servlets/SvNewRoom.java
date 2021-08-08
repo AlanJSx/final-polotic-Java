@@ -75,7 +75,7 @@ public class SvNewRoom extends HttpServlet {
         control.newRoom(roomName, roomNumber, hotelFloor, roomType, roomPrice);
         
         
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("HomePage.jsp");
         
         
         

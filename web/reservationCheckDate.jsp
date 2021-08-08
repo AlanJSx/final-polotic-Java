@@ -1,8 +1,3 @@
-
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@page import="Logica.Reservation"%>
-<%@page import="Logica.Controller"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,12 +7,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="./assets/css/styles.css">
-    <title>Habitaciones</title>
+    <title>Verificar reserva</title>
 </head>
 <body class="container">   
     
     <%
         HttpSession mySession = request.getSession();
+        
         
         String userLogin = (String) mySession.getAttribute("jspUser");
         
@@ -26,7 +22,7 @@
         } else { 
         
     %>
-       
+     
     <header>
       <!-- Background image -->
       <div
@@ -39,7 +35,7 @@
           <div class="d-flex justify-content-center align-items-center h-100">
             <div class="text-white">
               <h1 class="mb-3">Hotel</h1>
-              <h3 class="mb-3">HomePage</h3>
+              <h3 class="mb-3">Reservas</h4>
             </div>
           </div>
         </div>
@@ -57,32 +53,31 @@
               <a class="nav-link" href="#">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="reservationCheckDate.jsp">Reservas</a>
+              <a class="nav-link" href="#">Reservas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="rooms.jsp">Habitaciones</a>
+              <a class="nav-link" href="#">Habitaciones</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="employee.jsp">Empleados</a>
-            </li>
-            
-            <li>
-                <a class="nav-link" href="guestList.jsp">Lista de Huéspedes </a>
+              <a class="nav-link" href="#">Empleados</a>
             </li>
           </ul>
         </div>
     </nav>
-    
+
+
+
+    <main>
         <div class="mx-auto">
-            <form action="SvGetReservation" method="GET" class="g-3">            
+            <form action="SvGetAvailableRooms" method="GET" class="g-3">            
                 <div class="row mb-3">
                     <div class="col">
-                        <label for="from" class="form-label">Desde</label>
-                        <input type="date" name="from" class="form-control">
+                        <label for="checkIn" class="form-label">Fecha Check-In</label>
+                        <input type="date" name="checkIn" class="form-control">
                     </div>
                     <div class="col">
-                        <label for="to" class="form-label">Hasta</label>
-                        <input type="date" name="to" class="form-control">
+                        <label for="checkOut" class="form-label">Fecha Check-out</label>
+                        <input type="date" name="checkOut" class="form-control">
                     </div>
                 </div>
 
@@ -106,50 +101,6 @@
                 
                 <input type="submit" value="Confirmar" class="btn-primary px-4">
             </form>
-        </div>
-    
-    <main>
-        <div>
-            <h4>Reservas para el día de hoy</4>    
-        </div>      
-        <div class="">
-            <table class="table">
-                <thead>
-                    <tr class="table table-success table-striped">
-                        <th class="col">Id</th>
-                        <th class="col">Dni</th>
-                        <th class="col">Huesped</th>
-                        <th class="col">Número Habitación</th>
-                        <th class="col">Nombre Habitación</th>
-                        <th class="col">Check-Out</th>
-                    </tr>               
-                </thead>
-                <tbody>
-                    
-                
-                    <% 
-                    Controller control = new Controller();
-                    List<Reservation> reservationList = control.getReservationToday();
-                    for (Reservation reservation : reservationList){
-                        
-                        
-                    String resDate = control.convertDatetoString(reservation.getCheckOut());
-                   
-                    %>  
-                
-                    <tr scope="row">   
-                        <td> <%= reservation.getReservationId() %> </td>
-                        <td> <%= reservation.getGuest().getDni() %> </td>
-                        <td> <%= reservation.getGuest().getName() + " " + reservation.getGuest().getLastName() %> </td>
-                        <td> <%= reservation.getRoomId().getRoomNumber()%> </td>
-                        <td> <%= reservation.getRoomId().getRoomName()%> </td>
-                        <td> <%= resDate %> </td>
-                    </tr> 
-                    
-                 <% } %>   
-                </tbody>
-
-            </table>    
         </div>
     </main>
 

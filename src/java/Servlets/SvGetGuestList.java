@@ -6,23 +6,23 @@
 package Servlets;
 
 import Logica.Controller;
+import Logica.Guest;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author alanl
  */
-@WebServlet(name = "SvReservation", urlPatterns = {"/SvReservation"})
-public class SvReservation extends HttpServlet {
+@WebServlet(name = "SvGetGuestList", urlPatterns = {"/SvGetGuestList"})
+public class SvGetGuestList extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,7 +35,6 @@ public class SvReservation extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
 
     }
 
@@ -51,7 +50,15 @@ public class SvReservation extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        Controller control = new Controller();
+        List<Guest> guestList = control.getGuestList();
+        
+        HttpSession mySession = request.getSession();
+        mySession.setAttribute("guestList", guestList);
+        
+        response.sendRedirect("guestList.jsp");
+        
     }
 
     /**
@@ -66,28 +73,7 @@ public class SvReservation extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
-        Controller control = new Controller();
-               
-        
-        String dni = (String) request.getSession().getAttribute("dniGuest");
-        String checkIn = request.getParameter("checkIn");
-        String checkOut = request.getParameter("checkOut");
-        int numberPeople = Integer.parseInt(request.getParameter("numberPeople"));
-        int numberNights = 2;  // calcular cantidad de noches
-        String selectedRoom = request.getParameter("selectedRoom");
-        
-        String userEmployee = (String) request.getSession().getAttribute("jspUser");
-        
-        
-        
-        //    control.newReservationG(dni, checkIn, checkOut, numberPeople, numberNights, selectedRoom, userEmployee);
-
-        
-        response.sendRedirect("index.jsp");
-        
     }
-    
 
     /**
      * Returns a short description of the servlet.

@@ -4,6 +4,7 @@
     Author     : alanl
 --%>
 
+<%@page import="java.util.List"%>
 <%@page import="Logica.Room"%>
 <%@page import="Logica.Controller"%>
 
@@ -22,6 +23,7 @@
     
     <%
         HttpSession mySession = request.getSession();
+
         
         
         String userLogin = (String) mySession.getAttribute("jspUser");
@@ -83,63 +85,22 @@
 
     <main>
         <div class="mx-auto">
-            <form action="SvGetAvailableRooms" method="GET" class="g-3">
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="dni" class="form-label">Nro. Documento</label>
-                        <input type="text" name="dni" class="form-control" value="<%= dniGuest %>">
-                    </div>
-                    <div class="col">
-                        <label for="birthDate" class="form-label">Fecha Nacimiento</label>
-                        <input type="date" name="birthDate" class="form-control">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="name" class="form-label">Nombre</label>
-                        <input type="text" name="name" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label for="lastName" class="form-label">Apellido</label>
-                        <input type="text" name="lastName" class="form-control">
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="adress" class="form-label">Domicilio</label>
-                        <input type="text" name="adress" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label for="career" class="form-label">Profesión</label>
-                        <input type="text" name="career" class="form-control">
-                    </div>
-                </div>
-                
+            <form action="SvNewReservation" method="POST" class="g-3">               
                 <div class="row mb-3">
                     <div class="col">
                         <label for="checkIn" class="form-label">Fecha Check-In</label>
-                        <input type="date" name="checkIn" class="form-control">
+                        <input type="text" name="checkIn" class="form-control" value="<%= mySession.getAttribute("checkIn") %> " disabled>
                     </div>
                     <div class="col">
                         <label for="checkOut" class="form-label">Fecha Check-out</label>
-                        <input type="date" name="checkOut" class="form-control">
+                        <input type="text" name="checkOut" class="form-control" value="<%= mySession.getAttribute("checkOut") %> " disabled>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col">
                         <label for="numberPeople" class="form-label">Cantidad Personas</label>
-                            <select name="numberPeople" class="form-select">
-                            <option value="0" selected> - </option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-
-                        </select>
+                        <input type="number" name="numberPeople" class="form-control" value="<%= mySession.getAttribute("numberPeople") %>" disabled>
                     </div>
                     <div class="col">
                         <label for="selectedRoom" class="form-label">Habitación (disponibles)</label>
@@ -148,10 +109,13 @@
                             
                             <!-- insertar java para obtener habitaciones -->
                           <%  
-                                Controller control = new Controller();
-                                for(Room room : control.getRoomList()){
+                                
+                                List<Room> roomList = (List) request.getSession().getAttribute("availableRoomList");
+                                
+                                for(Room room : roomList){
                                      String roomName = room.getRoomName();
                                      int roomId = room.getIdRoom();
+                                     
                     
                             %> 
                 
@@ -162,7 +126,7 @@
                         </select>
                     </div>
                 </div>
-               
+                <input type = "button" value = "Atras" onclick = "history.back ()" class="btn-secondary px-4">
                 <input type="submit" value="Confirmar" class="btn-primary px-4">
             </form>
         </div>

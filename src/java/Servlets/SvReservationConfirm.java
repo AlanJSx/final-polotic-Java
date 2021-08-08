@@ -13,13 +13,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 /**
  *
  * @author alanl
  */
-@WebServlet(name = "SvFindGuest", urlPatterns = {"/SvFindGuest"})
-public class SvFindGuest extends HttpServlet {
+@WebServlet(name = "SvReservationConfirm", urlPatterns = {"/SvReservationConfirm"})
+public class SvReservationConfirm extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,7 +34,7 @@ public class SvFindGuest extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        
 
     }
 
@@ -64,17 +66,26 @@ public class SvFindGuest extends HttpServlet {
             throws ServletException, IOException {
         
         Controller control = new Controller();
+               
+        HttpSession mySession = request.getSession();
         
-        String dni = request.getParameter("dni");
+        String dni = (String) mySession.getAttribute("dniGuest");
+        String checkIn = (String) mySession.getAttribute("checkIn");
+        String checkOut = (String) mySession.getAttribute("checkOut");
+        int numberPeople = (int) request.getSession().getAttribute("numberPeople");
         
-        if (control.findGuestDni(dni)){
-            request.getSession().setAttribute("dniGuest", dni);
-            response.sendRedirect("newReservation.jsp");
-        } else {
-            request.getSession().setAttribute("dniGuest", dni);
-            response.sendRedirect("newGuestReservation.jsp");
-        }
+        int numberNights = 2;  // calcular cantidad de noches
+        String selectedRoom = (String) mySession.getAttribute("selectedRoom");
         
+        String userEmployee = (String) request.getSession().getAttribute("jspUser");
+        
+        
+        
+        control.newReservationG(dni, checkIn, checkOut, numberPeople, numberNights, selectedRoom, userEmployee);
+
+        
+        response.sendRedirect("reservationComplete.jsp");
+                     
     }
 
     /**

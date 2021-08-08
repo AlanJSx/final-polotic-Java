@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -61,8 +61,11 @@ public class SvGetAvailableRooms extends HttpServlet {
         
         HttpSession mySession = request.getSession();
         mySession.setAttribute("availableRoomList", availableRoomList);
+        mySession.setAttribute("checkIn", checkIn);
+        mySession.setAttribute("checkOut", checkOut);
+        mySession.setAttribute("numberPeople", numberPeople);  
         
-        response.sendRedirect("newReservationRoom.jsp");
+        response.sendRedirect("reservationAvailableRooms.jsp");
     }
 
     /**

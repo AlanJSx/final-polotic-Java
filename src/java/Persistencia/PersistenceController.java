@@ -56,4 +56,8 @@ public class PersistenceController {
         return reservationJpa.findReservationEntities();
     }
 
+    public Room getRoomId(int idRoom) {
+        return roomJpa.findRoom(idRoom);
+    }
+
 }

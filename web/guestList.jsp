@@ -1,12 +1,9 @@
-<%-- 
-    Document   : reservation
-    Created on : 04-ago-2021, 19:23:49
-    Author     : alanl
---%>
 
-<%@page import="Logica.Room"%>
+<%@page import="Logica.Guest"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="Logica.Reservation"%>
 <%@page import="Logica.Controller"%>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,7 +19,6 @@
     
     <%
         HttpSession mySession = request.getSession();
-        
         
         String userLogin = (String) mySession.getAttribute("jspUser");
         
@@ -44,7 +40,7 @@
           <div class="d-flex justify-content-center align-items-center h-100">
             <div class="text-white">
               <h1 class="mb-3">Hotel</h1>
-              <h3 class="mb-3">Reservas</h4>
+              <h3 class="mb-3">HomePage</h3>
             </div>
           </div>
         </div>
@@ -62,32 +58,64 @@
               <a class="nav-link" href="#">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Reservas</a>
+              <a class="nav-link" href="reservationCheckDate.jsp">Reservas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Habitaciones</a>
+              <a class="nav-link" href="rooms.jsp">Habitaciones</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Empleados</a>
+              <a class="nav-link" href="employee.jsp">Empleados</a>
             </li>
           </ul>
         </div>
     </nav>
-
+    
 
 
     <main>
-        <div class="mx-auto">
-            <form action="SvFindGuest" method="POST" class="g-3">
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="dni" class="form-label">Nro. Documento</label>
-                        <input type="text" name="dni" class="form-control">
-                    </div>
-                </div>
+        <div>
+            <h4 class="text-center">Listado de Huéspedes</4>
+        </div>
+        
+        <div class="">
+            
+            <table class="table">  
+                <thead>
+                    <tr class="table table-success table-striped">
+                        <th scope="col">Dni</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Profesión</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                
+                    <% 
+                        List <Guest> guestList = (List) mySession.getAttribute("guestList");
+                    for (Guest guest : guestList){
+                    
                    
-                <input type="submit" value="Confirmar" class="btn-primary px-4">
-            </form>
+                    %>  
+                
+                    <tr scope="row">  
+                        <td> <%= guest.getDni() %> </td>
+                        <td> <%= guest.getName()%> </td>
+                        <td> <%= guest.getLastName() %> </td>
+                        <td> <%= guest.getAdress() %> </td>
+                        <td> <%= guest.getCareer()%> </td>
+
+                    </tr> 
+                    
+                 <% } %>   
+                </tbody>
+            </table>
+                <form action="SvGetGuestList" method="GET" >
+                    <input type="submit" value="Refrescar" class="btn btn-primary px-2"> 
+                </form>
+                
+                <!-- Agregar paginación mediante submit y devolución por get  -->
         </div>
     </main>
 
@@ -108,3 +136,4 @@
     <% } %>
 </body>
 </html>
+
