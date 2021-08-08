@@ -12,20 +12,11 @@
     <title>Hotel HomePage</title>
 </head>
 <body class="container">  
-    
-    // verificacion y alta de usuario principal
-    <%  Controller control = new Controller();
-       
-        //if (control.hotelAdministrator("admin")){
-        //    control.createHotelAdministrator();
-        //}
-             
-        control.adminUser(); 
+    <%
+        Controller control = new Controller();
+        control.adminUser();
         
     %>
-    
-    
-    
     <header>
       <!-- Background image -->
       <div
@@ -109,6 +100,6 @@
         <!-- Copyright -->
       </footer>
 
-
+    
 </body>
 </html>

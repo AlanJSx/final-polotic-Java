@@ -64,7 +64,9 @@ public class SvLoginPage extends HttpServlet {
             throws ServletException, IOException {
         
         Controller control = new Controller();
-        
+           
+        control.adminUser();
+
         String jspUser = request.getParameter("jspUser");
         String jspPassword = request.getParameter("jspPassword");
         

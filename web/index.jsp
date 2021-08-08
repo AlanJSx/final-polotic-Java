@@ -12,9 +12,7 @@
     <title>Hotel</title>
 </head>
 <body class="container">  
-    
-
-    
+  
     
     <header>
       <!-- Background image -->
@@ -66,6 +64,6 @@
         <!-- Copyright -->
       </footer>
 
-
+   
 </body>
 </html>

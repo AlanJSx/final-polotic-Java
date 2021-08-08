@@ -7,6 +7,9 @@ package Servlets;
 
 import Logica.Controller;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -83,7 +86,11 @@ public class SvNewReservationGuest extends HttpServlet {
         String userEmployee = (String) request.getSession().getAttribute("jspUser");
         
         
-        control.newReservation(dni, name, lastName, adress, career, birthDate, checkIn, checkOut, numberPeople, numberNights, selectedRoom, userEmployee);
+        try {
+            control.newReservation(dni, name, lastName, adress, career, birthDate, checkIn, checkOut, numberPeople, numberNights, selectedRoom, userEmployee);
+        } catch (ParseException ex) {
+            Logger.getLogger(SvNewReservationGuest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
         response.sendRedirect("HomePage.jsp");

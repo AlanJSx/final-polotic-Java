@@ -68,7 +68,7 @@ public class SvNewEmployee extends HttpServlet {
         String employeeName = request.getParameter("employeeName");
         String employeeLastName = request.getParameter("employeeLastName");
         String employeeDni = request.getParameter("employeeDni");
-        Date birthDate = Date.valueOf(request.getParameter("birthDate")); 
+        String birthDate = request.getParameter("birthDate"); 
         String adress = request.getParameter("adress");
         String workPosition = request.getParameter("workPosition");
         String username = request.getParameter("username");

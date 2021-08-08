@@ -83,7 +83,7 @@
                     for (Reservation reservation : reservationList){
                         
                         
-                        
+                    String resDate = control.convertDatetoString(reservation.getCheckOut());
                    
                     %>  
                 
@@ -92,7 +92,7 @@
                         <td> <%= reservation.getGuest().getDni() %> </td>
                         <td> <%= reservation.getGuest().getName() + " " + reservation.getGuest().getLastName() %> </td>
                         <td> <%= reservation.getRoomId().getIdRoom() %> </td>
-                        <td> <%= reservation.getCheckOut() %> </td>
+                        <td> <%= resDate %> </td>
                     </tr> 
                     
                  <% } %>   

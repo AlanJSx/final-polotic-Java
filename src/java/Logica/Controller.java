@@ -1,17 +1,21 @@
 package Logica;
 
+
 import Persistencia.PersistenceController;
-import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
 
 
 public class Controller {
     PersistenceController perControl = new PersistenceController();
-    
     public List<Room> getRoomList(){
         return perControl.getRoomList();
     }
@@ -28,13 +32,15 @@ public class Controller {
         
     } 
     
-    public void newEmployee(String employeeName, String employeeLastName, String employeeDni, Date birthDate, String adress, String workPosition, String username, String password) {
+    public void newEmployee(String employeeName, String employeeLastName, String employeeDni, String birthDate, String adress, String workPosition, String username, String password) {
         Employee employee = new Employee();
         
         employee.setName(employeeName);
         employee.setLastName(employeeLastName);
         employee.setDni(employeeDni);
-        employee.setBirthDate(birthDate);
+
+        Date birth = convertStrintoDate(birthDate);
+        employee.setBirthDate(birth);
         employee.setAdress(adress);
         employee.setWorkPosition(workPosition);
         
@@ -58,7 +64,13 @@ public class Controller {
         return false;
     }
     
-    public void newReservation(String dni, String name, String lastName, String adress, String career, String birthDate, String checkIn, String checkOut, int numberPeople, int numberNights, String selectedRoom, String userEmployee) {
+    public void newReservation(String dni, String name, String lastName, String adress, String career, String birthDate, String checkIn, String checkOut, int numberPeople, int numberNights, String selectedRoom, String userEmployee) throws ParseException {
+        
+        Date guestCheckIn = convertStrintoDate(checkIn);
+        Date guestCheckOut = convertStrintoDate(checkOut);
+        
+        
+        boolean disponible = checkDateReservation(guestCheckIn, guestCheckOut);
         
         Guest guest = new Guest();
         Room room;
@@ -76,7 +88,9 @@ public class Controller {
         guest.setName(name);
         guest.setLastName(lastName);
         guest.setAdress(adress);
-        guest.setBirthDate(Date.valueOf(birthDate));
+        Date guestBirthDate = convertStrintoDate(birthDate);
+        guest.setBirthDate(guestBirthDate);
+        //guest.setBirthDate(Date.valueOf(birthDate));
         guest.setCareer(career);
         perControl.newGuest(guest);
         
@@ -84,8 +98,12 @@ public class Controller {
         reservation.setRoomId(room);
         reservation.setNumberPeople(numberPeople);
         reservation.setNumberNights(numberNights);
-        reservation.setCheckIn(Date.valueOf(checkIn));
-        reservation.setCheckOut(Date.valueOf(checkOut));
+
+        
+        reservation.setCheckIn(guestCheckIn);
+        reservation.setCheckOut(guestCheckOut);
+        //reservation.setCheckIn(Date.valueOf(checkIn));
+        //reservation.setCheckOut(Date.valueOf(checkOut));
         reservation.setCost(2);
         reservation.setEmployeeId(employee);
         
@@ -94,6 +112,37 @@ public class Controller {
         
         
     }
+    
+        /*
+            SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        try {
+            Date reservationCheckIn = (Date) format.parse(checkIn);
+        } catch (ParseException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            Date reservationCheckout = (Date) format.parse(checkIn);
+        } catch (ParseException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    */
+        
+    public boolean checkDateReservation(Date checkIn, Date checkOut){
+                
+        List<Reservation> reservationList = perControl.getReservationList();
+        
+        for (Reservation reservation : reservationList){
+            Date checkInres = (Date) reservation.getCheckIn();
+            Date checkOutres = (Date) reservation.getCheckOut();
+            
+            if (checkInres.before(checkIn) && checkOutres.before(checkIn) || (checkInres.after(checkOut) && checkOutres.after(checkOut))){
+                System.out.println(true + " paso ");
+                return true;
+            }                                         
+        }
+        return false;
+    }
+     
     
     public boolean findGuestDni(String dni){
         List<Guest> guestList = perControl.getGuest();    
@@ -153,8 +202,12 @@ public class Controller {
         reservation.setRoomId(room);
         reservation.setNumberPeople(numberPeople);
         reservation.setNumberNights(numberNights);
-        reservation.setCheckIn(Date.valueOf(checkIn));
-        reservation.setCheckOut(Date.valueOf(checkOut));
+        Date guestCheckIn = convertStrintoDate(checkIn);
+        Date guestCheckOut = convertStrintoDate(checkOut);
+        reservation.setCheckIn(guestCheckIn);
+        reservation.setCheckOut(guestCheckOut);
+        //reservation.setCheckIn(Date.valueOf(checkIn));
+        //reservation.setCheckOut(Date.valueOf(checkOut));
         reservation.setCost(2);
         reservation.setEmployeeId(employee);
         
@@ -164,7 +217,7 @@ public class Controller {
     
 
     public void adminUser(){
-        if (!isHotelAdministrator("admin")) {
+        if (isHotelAdministrator("admin") == false) {
             createHotelAdministrator();
         }
     }    
@@ -193,7 +246,10 @@ public class Controller {
         
 
  
-        employee.setBirthDate(Date.valueOf("2020-12-31"));
+//        employee.setBirthDate(Date.valueOf("2020-12-31"));
+        String birthDate = "2020-12-31";
+        Date employeeBirth = convertStrintoDate(birthDate);
+        employee.setBirthDate(employeeBirth);
         employee.setAdress("Hotel Street");
         employee.setWorkPosition(" Hotel Administrator ");
         
@@ -211,18 +267,41 @@ public class Controller {
         List<Reservation> reservationList = perControl.getReservationList();
         
         List<Reservation> reservationToday = new ArrayList<>();
-        String today = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
-        System.out.println(today);
+        String today = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        
         for (Reservation reservation : reservationList){
-            String reservationDate = new SimpleDateFormat("yyyy/MM/dd").format(reservation.getCheckIn());
-            System.out.println(reservationDate);
+            String reservationDate = new SimpleDateFormat("yyyy-MM-dd").format(reservation.getCheckIn());
+            
             
             if(reservationDate.equals(today)){
-                System.out.println(reservation.getReservationId());
+                
                 reservationToday.add(reservation);
             }
         }
         return reservationToday;
     }
 
+    public String convertDatetoString (Date dateDate){
+        SimpleDateFormat formatNew = new SimpleDateFormat("dd-MM-yyyy");
+        String newDateString = formatNew.format(dateDate);
+        
+        return newDateString;
+    }
+    
+    public Date convertStrintoDate(String stringDate){
+        Date newDate = new Date();
+        
+        SimpleDateFormat formatDateNew = new SimpleDateFormat("yyyy-MM-dd");
+        
+        try {
+            newDate = formatDateNew.parse(stringDate);
+        } catch (ParseException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        formatDateNew.format(newDate);
+        
+        return newDate;
+        
+    }
 }
