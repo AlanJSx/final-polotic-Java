@@ -22,6 +22,7 @@ public class Room implements Serializable {
     @Basic
     private int roomNumber;
     private int hotelFloor;
+    private int maxPeople;
     private String roomName;
     private String roomType;
     private double roomPrice; 
@@ -32,10 +33,11 @@ public class Room implements Serializable {
     public Room() {
     }
 
-    public Room(int idRoom, int roomNumber, int hotelFloor, String roomName, String roomType, double roomPrice) {
+    public Room(int idRoom, int roomNumber, int hotelFloor, int maxPeople, String roomName, String roomType, double roomPrice) {
         this.idRoom = idRoom;
         this.roomNumber = roomNumber;
         this.hotelFloor = hotelFloor;
+        this.maxPeople = maxPeople;
         this.roomName = roomName;
         this.roomType = roomType;
         this.roomPrice = roomPrice;
@@ -88,6 +90,15 @@ public class Room implements Serializable {
     public void setRoomPrice(double roomPrice) {
         this.roomPrice = roomPrice;
     }
+
+    public int getMaxPeople() {
+        return maxPeople;
+    }
+
+    public void setMaxPeople(int maxPeople) {
+        this.maxPeople = maxPeople;
+    }
+
     
     
     

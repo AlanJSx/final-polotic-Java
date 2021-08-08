@@ -19,6 +19,27 @@ public class Controller {
     public List<Room> getRoomList(){
         return perControl.getRoomList();
     }
+    
+    private int numberPeople(String roomType){
+        int numberPeople = 0;
+        switch (roomType) {
+        case "single":
+            numberPeople = 1;
+        break;
+
+        case "doble":
+            numberPeople = 2;
+        break;
+
+        case "triple":
+            numberPeople = 3;    
+
+        case "max":
+            numberPeople = 6;   
+        break;
+        }
+        return numberPeople;
+    }
         
     public void newRoom(String roomName, int roomNumber, int hotelFloor, String roomType, double roomPrice) {
         Room room = new Room();
@@ -27,7 +48,7 @@ public class Controller {
         room.setHotelFloor(hotelFloor);
         room.setRoomType(roomType);
         room.setRoomPrice(roomPrice);
-        
+        room.setMaxPeople(numberPeople(roomType));
         perControl.newRoom(room);
         
     } 
@@ -64,53 +85,48 @@ public class Controller {
         return false;
     }
     
-    public void newReservation(String dni, String name, String lastName, String adress, String career, String birthDate, String checkIn, String checkOut, int numberPeople, int numberNights, String selectedRoom, String userEmployee) throws ParseException {
-        
+    public void newReservation(String dni, String name, String lastName, String adress, String career, String birthDate, String checkIn, String checkOut, int numberPeople, int numberNights, String selectedRoom, String userEmployee) throws ParseException {       
         Date guestCheckIn = convertStrintoDate(checkIn);
         Date guestCheckOut = convertStrintoDate(checkOut);
         
         
-        boolean disponible = checkDateReservation(guestCheckIn, guestCheckOut);
-        
-        Guest guest = new Guest();
-        Room room;
-        
-        Employee employee;
-        
-        employee = findEmployeeByUser(userEmployee);
-      
-            
-        Reservation reservation = new Reservation();
-        int roomId = Integer.parseInt(selectedRoom.replace(" ","")); 
-        room = perControl.findRoom(roomId);
-        
-        guest.setDni(dni);
-        guest.setName(name);
-        guest.setLastName(lastName);
-        guest.setAdress(adress);
-        Date guestBirthDate = convertStrintoDate(birthDate);
-        guest.setBirthDate(guestBirthDate);
-        //guest.setBirthDate(Date.valueOf(birthDate));
-        guest.setCareer(career);
-        perControl.newGuest(guest);
-        
-        reservation.setGuest(guest);
-        reservation.setRoomId(room);
-        reservation.setNumberPeople(numberPeople);
-        reservation.setNumberNights(numberNights);
+            Guest guest = new Guest();
+            Room room;
 
-        
-        reservation.setCheckIn(guestCheckIn);
-        reservation.setCheckOut(guestCheckOut);
-        //reservation.setCheckIn(Date.valueOf(checkIn));
-        //reservation.setCheckOut(Date.valueOf(checkOut));
-        reservation.setCost(2);
-        reservation.setEmployeeId(employee);
-        
-        perControl.newReservation(reservation);
-        
-        
-        
+            Employee employee;
+
+            employee = findEmployeeByUser(userEmployee);
+
+            Reservation reservation = new Reservation();
+            int roomId = Integer.parseInt(selectedRoom.replace(" ","")); 
+            room = perControl.findRoom(roomId);
+
+            guest.setDni(dni);
+            guest.setName(name);
+            guest.setLastName(lastName);
+            guest.setAdress(adress);
+            Date guestBirthDate = convertStrintoDate(birthDate);
+            guest.setBirthDate(guestBirthDate);
+            //guest.setBirthDate(Date.valueOf(birthDate));
+            guest.setCareer(career);
+            perControl.newGuest(guest);
+
+            reservation.setGuest(guest);
+            reservation.setRoomId(room);
+            reservation.setNumberPeople(numberPeople);
+            reservation.setNumberNights(numberNights);
+
+
+            reservation.setCheckIn(guestCheckIn);
+            reservation.setCheckOut(guestCheckOut);
+            //reservation.setCheckIn(Date.valueOf(checkIn));
+            //reservation.setCheckOut(Date.valueOf(checkOut));
+            reservation.setCost(2);
+            reservation.setEmployeeId(employee);
+
+            perControl.newReservation(reservation);                                      
+
+           
     }
     
         /*
@@ -304,4 +320,44 @@ public class Controller {
         return newDate;
         
     }
+
+    public List getRoomListByDate(int numberPeople, String in, String out) {
+        Date checkIn = convertStrintoDate(in);
+        Date checkOut = convertStrintoDate(out);
+        List<Room> availableRoomList = new ArrayList<>();
+        List<Reservation> reservationList = perControl.getReservationList();
+        List<Room> roomList = perControl.getRoomList();
+        
+        if (!reservationList.isEmpty()){
+            for (Room room : roomList){               
+                int contador = 0;
+                System.out.println(room.getRoomName());
+                if(numberPeople <= room.getMaxPeople()){
+                    for (Reservation reservation : reservationList){
+                        Date reservationCheckIn = reservation.getCheckIn();
+                        Date reservationCheckOut = reservation.getCheckOut();
+                        if (checkIn.compareTo(reservationCheckOut) >= 0){
+                            contador++; 
+                        } else if(checkOut.compareTo(reservationCheckIn) <= 0){
+                            contador++;
+                        }
+                        System.out.println(contador);
+                        System.out.println(reservationList.size());
+                        if (contador == reservationList.size()){
+                            availableRoomList.add(room);
+                        }    
+                    }                                                                
+                }                                         
+            }
+            return availableRoomList;    
+        } else {
+            for (Room room : roomList){
+                if(numberPeople > room.getMaxPeople()){
+                    roomList.remove(room);
+                }
+            }
+            return roomList;   
+        }                             
+    }
 }
+  

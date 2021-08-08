@@ -4,6 +4,7 @@
     Author     : alanl
 --%>
 
+<%@page import="java.util.List"%>
 <%@page import="Logica.Room"%>
 <%@page import="Logica.Controller"%>
 
@@ -22,6 +23,7 @@
     
     <%
         HttpSession mySession = request.getSession();
+
         
         
         String userLogin = (String) mySession.getAttribute("jspUser");
@@ -83,7 +85,7 @@
 
     <main>
         <div class="mx-auto">
-            <form action="SvGetAvailableRooms" method="GET" class="g-3">
+            <form action="SvNewReservationGuest" method="POST" class="g-3">
                 <div class="row mb-3">
                     <div class="col">
                         <label for="dni" class="form-label">Nro. Documento</label>
@@ -148,10 +150,13 @@
                             
                             <!-- insertar java para obtener habitaciones -->
                           <%  
-                                Controller control = new Controller();
-                                for(Room room : control.getRoomList()){
+                                
+                                List<Room> roomList = (List) request.getSession().getAttribute("availableRoomList");
+                                
+                                for(Room room : roomList){
                                      String roomName = room.getRoomName();
                                      int roomId = room.getIdRoom();
+                                     
                     
                             %> 
                 

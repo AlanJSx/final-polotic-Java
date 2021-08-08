@@ -66,7 +66,7 @@ public class SvFindGuest extends HttpServlet {
         Controller control = new Controller();
         
         String dni = request.getParameter("dni");
-        System.out.println("|"+ dni + "|");
+        
         if (control.findGuestDni(dni)){
             request.getSession().setAttribute("dniGuest", dni);
             response.sendRedirect("newReservation.jsp");

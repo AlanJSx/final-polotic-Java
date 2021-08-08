@@ -6,22 +6,23 @@
 package Servlets;
 
 import Logica.Controller;
+import Logica.Room;
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author alanl
  */
-@WebServlet(name = "SvNewReservationGuest", urlPatterns = {"/SvNewReservationGuest"})
-public class SvNewReservationGuest extends HttpServlet {
+@WebServlet(name = "SvGetAvailableRooms", urlPatterns = {"/SvGetAvailableRooms"})
+public class SvGetAvailableRooms extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,7 +35,6 @@ public class SvNewReservationGuest extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
 
     }
 
@@ -50,7 +50,19 @@ public class SvNewReservationGuest extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Controller control = new Controller();
+        String checkIn = request.getParameter("checkIn");
+        String checkOut = request.getParameter("checkOut");
+        int numberPeople = Integer.parseInt(request.getParameter("numberPeople"));
+        
+        List <Room> availableRoomList = control.getRoomListByDate(numberPeople,checkIn, checkOut);
+        
+        request.getSession().setAttribute("availableRoomList", availableRoomList);
+        
+        HttpSession mySession = request.getSession();
+        mySession.setAttribute("availableRoomList", availableRoomList);
+        
+        response.sendRedirect("newReservationRoom.jsp");
     }
 
     /**
@@ -64,35 +76,8 @@ public class SvNewReservationGuest extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
         
         
-        
-        Controller control = new Controller();
-        
-              
-        String dni = request.getParameter("dni");
-        String name = request.getParameter("name");
-        String lastName = request.getParameter("lastName");
-        String adress = request.getParameter("adress");
-        String career = request.getParameter("career");
-        String birthDate = request.getParameter("birthDate");
-        String checkIn = request.getParameter("checkIn");
-        String checkOut = request.getParameter("checkOut");
-        int numberPeople = Integer.parseInt(request.getParameter("numberPeople"));
-        int numberNights = 2;  // calcular cantidad de noches
-        String selectedRoom = request.getParameter("selectedRoom");
-        
-        String userEmployee = (String) request.getSession().getAttribute("jspUser");
-       
-        try {
-            control.newReservation(dni, name, lastName, adress, career, birthDate, checkIn, checkOut, numberPeople, numberNights, selectedRoom, userEmployee);
-        } catch (ParseException ex) {
-            Logger.getLogger(SvNewReservationGuest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        response.sendRedirect("HomePage.jsp");
-
-
         
         
     }
