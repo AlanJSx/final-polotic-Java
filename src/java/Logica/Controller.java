@@ -317,6 +317,13 @@ public class Controller {
         return newDateString;
     }
     
+    public String convertDateString (Date dateDate){
+        SimpleDateFormat formatNew = new SimpleDateFormat("yyyy-MM-dd");
+        String newDateString = formatNew.format(dateDate);
+        
+        return newDateString;
+    }
+    
     public Date convertStrintoDate(String stringDate){
         Date newDate = new Date();
         
@@ -464,6 +471,36 @@ public class Controller {
         newEmployee("Empleado 3", "Ape 3 ", "34654464", "1990-08-28", "calle3", "Recepcionista", "empleado3", "empleado3");
     
         
+    }
+
+    public void updateRoom(int roomId, String roomName, int roomNumber, String hotelFloor, String roomType, double roomPrice) {
+        Room room = new Room();
+        System.out.println(" Room Id " + "|" + roomId + "|");
+        //int roomIdM = Integer.parseInt(roomId.replace(" ","")); 
+        
+        room.setIdRoom(roomId);
+        room.setRoomName(roomName);
+        room.setRoomNumber(roomNumber);
+        
+        int roomFloor = Integer.parseInt(hotelFloor.replace(" ","")); 
+        room.setHotelFloor(roomFloor);
+        room.setRoomType(roomType);
+        room.setRoomPrice(roomPrice);
+        room.setMaxPeople(numberPeople(roomType));
+    
+        
+        perControl.updateRoom(room);
+
+    }
+
+    public void deleteRoom(int roomId) {
+        perControl.deleteRoom(roomId);
+    }
+
+
+
+    public Employee getEmployee(int employeeId) {
+        return perControl.getEmployeeById(employeeId);
     }
     
 }

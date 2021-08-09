@@ -5,7 +5,10 @@ import Logica.Guest;
 import Logica.Reservation;
 import Logica.Room;
 import Logica.User;
+import Persistencia.exceptions.NonexistentEntityException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class PersistenceController {
@@ -67,6 +70,22 @@ public class PersistenceController {
 
     public Employee getEmployeeById(int id){
         return employeeJpa.findEmployee(id);
+    }
+
+    public void updateRoom(Room room) {
+        try {
+            roomJpa.edit(room);
+        } catch (Exception ex) {
+            Logger.getLogger(PersistenceController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void deleteRoom(int roomId) {
+        try {
+            roomJpa.destroy(roomId);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(PersistenceController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 

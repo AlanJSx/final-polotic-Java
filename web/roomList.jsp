@@ -1,3 +1,10 @@
+
+<%@page import="Logica.Room"%>
+<%@page import="Logica.Guest"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="Logica.Reservation"%>
+<%@page import="Logica.Controller"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -34,7 +41,7 @@
           <div class="d-flex justify-content-center align-items-center h-100">
             <div class="text-white">
               <h1 class="mb-3">Hotel</h1>
-              <h3 class="mb-3">Habitaciones</h3>
+              <h3 class="mb-3">HomePage</h3>
             </div>
           </div>
         </div>
@@ -60,48 +67,69 @@
             <li class="nav-item">
               <a class="nav-link" href="employee.jsp">Empleados</a>
             </li>
-            
-            <li>
-                <a class="nav-link" href="guestList.jsp">Lista de Huéspedes </a>
-            </li>
           </ul>
         </div>
-    </nav> 
-       
+    </nav>
     
-    
-    <main>
-        <article>
-            <div class="text-center mb-3">
-                <h4>Crear una nueva Habitación</h4>
-                <a href="./newRoom.jsp">Nueva Habitación</a>    
-            </div>
-                
-        </article>
-        
-        <article class="pt-3">
-            <div class="mb-3 mt-3">
-            <h4 class="text-center">Listado de Habitaciones</4>
-            </div>
-            <table class="table">  
-                    <thead>
-                        <tr class="table table-success table-striped">                       
-                            <th scope="col">Número Habitación</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Piso</th>
-                            <th scope="col">Tipo</th>
-                            <th scope="col">Precio</th>   
-                            <th scope="col">Editar</th> 
-                            <th scope="col">Eliminar</th> 
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-            </table>
-            <form action="SvGetRoomList" method="GET" >
-                <input type="submit" value="Refrescar" class="btn btn-primary px-2"> 
-            </form>        
-        </article>
 
+
+    <main>
+        <div>
+            <h4 class="text-center">Listado de Habitaciones</4>
+        </div>
+        
+        <div class="">
+            
+            <table class="table">  
+                <thead>
+                    <tr class="table table-success table-striped">
+                        <th scope="col">Id</th>
+                        <th scope="col">Número Habitación</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Piso</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Precio</th>    
+                        <th scope="col">Editar</th> 
+                        <th scope="col">Eliminar</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                
+                    <% 
+                        List <Room> roomList = (List) mySession.getAttribute("roomList");
+                    for (Room room : roomList){
+
+                   
+                    %>  
+                
+                    <tr scope="row">  
+                        <td> <%= room.getIdRoom() %> </td>
+                        <td> <%= room.getRoomNumber()%> </td>
+                        <td> <%= room.getRoomName()%> </td>
+                        <td> <%= room.getHotelFloor()%> </td>
+                        <td> <%= room.getRoomType()%> </td>
+                        <td> <%= room.getRoomPrice()%> </td>
+                        <td>
+                            <form action="SvEditRoom" method="POST">
+                                <button type="submit" name="editRoomId" value="<%=room.getIdRoom()%>"> Editar </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="SvDeleteRoom" method="POST">
+                                <button type="submit" name="deleteRoomId" value="<%=room.getIdRoom()%>"> Eliminar </button>
+                            </form>
+                        </td>
+                    </tr> 
+                    
+                 <% } %>   
+                </tbody>
+            </table>
+                <form action="SvGetRoomList" method="GET" >
+                    <input type="submit" value="Refrescar" class="btn btn-primary px-2"> 
+                </form>
+                
+                <!-- Agregar paginación mediante submit y devolución por get  -->
+        </div>
     </main>
 
 
@@ -121,4 +149,5 @@
     <% } %>
 </body>
 </html>
+
 

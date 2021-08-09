@@ -1,9 +1,3 @@
-<%-- 
-    Document   : empleados
-    Created on : 03-ago-2021, 16:30:30
-    Author     : alanl
---%>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -16,6 +10,18 @@
     <title>Habitaciones</title>
 </head>
 <body class="container">   
+    
+    <%
+        HttpSession mySession = request.getSession();
+        
+        String userLogin = (String) mySession.getAttribute("jspUser");
+        
+        if (userLogin == null){
+            response.sendRedirect("login.jsp");
+        } else { 
+        
+    %>
+       
     <header>
       <!-- Background image -->
       <div
@@ -28,7 +34,7 @@
           <div class="d-flex justify-content-center align-items-center h-100">
             <div class="text-white">
               <h1 class="mb-3">Hotel</h1>
-              <h3 class="mb-3">Empleados</h4>
+              <h3 class="mb-3">Habitaciones</h3>
             </div>
           </div>
         </div>
@@ -46,76 +52,57 @@
               <a class="nav-link" href="#">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Reservas</a>
+              <a class="nav-link" href="reservationCheckDate.jsp">Reservas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Habitaciones</a>
+              <a class="nav-link" href="rooms.jsp">Habitaciones</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Empleados</a>
+              <a class="nav-link" href="employee.jsp">Empleados</a>
+            </li>
+            
+            <li>
+                <a class="nav-link" href="guestList.jsp">Lista de Huéspedes </a>
             </li>
           </ul>
         </div>
-    </nav>
-
-
-
+    </nav> 
+       
+    
+    
     <main>
-        <div class="mx-auto">
-            <form action="SvNewEmployee" method="POST" class="g-3">
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="employeeName" class="form-label">Nombre</label>
-                        <input type="text" name="employeeName" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label for="employeeLastName" class="form-label">Apellido</label>
-                        <input type="text" name="employeeLastName" class="form-control">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="employeeDni" class="form-label">Nro. Documento</label>
-                        <input type="text" name="employeeDni" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label for="birthDate" class="form-label">Fecha Nacimiento</label>
-                        <input type="date" name="birthDate" class="form-control">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="adress" class="form-label">Domicilio</label>
-                        <input type="text" name="adress" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label for="workPosition" class="form-label">Cargo</label>
-                        <select name="workPosition" class="form-select">
-                            <option value="0" selected> - </option>
-                            <option value="1">Recepcionista</option>
-                            <option value="2">Gerente</option>
-
-                        </select>
-                    </div>
-
-                </div>
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="username" class="form-label">Usuario</label>
-                        <input type="text" name="username" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label for="password" class="form-label">Contraseña</label>
-                        <input type="text" name="password" class="form-control">
-                    </div>
-                </div>
-
-
-
+        <article>
+            <div class="text-center mb-3">
+                <h4>Alta de Nuevo Empleado</h4>
+                <a href="./newEmployee.jsp">Nuevo Empleado</a>    
+            </div>
                 
-                <input id="btnConfirmar" type="submit" value="conf" class="btn-primary px-4">
-            </form>
-        </div>
+        </article>
+        
+        <article class="pt-3">
+            <div class="mb-3 mt-3">
+            <h4 class="text-center">Listado de Empleados</4>
+            </div>
+            <table class="table">  
+                    <thead>
+                        <tr class="table table-success table-striped">                       
+                            <th scope="col">Dni</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Direccion</th>
+                            <th scope="col">Cargo</th>  
+                            <th scope="col">Usuario</th> 
+                            <th scope="col">Editar</th> 
+                            <th scope="col">Eliminar</th> 
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+            </table>
+            <form action="SvGetEmployeeList" method="GET" >
+                <input type="submit" value="Refrescar" class="btn btn-primary px-2"> 
+            </form>        
+        </article>
+
     </main>
 
 
@@ -132,6 +119,7 @@
         <!-- Copyright -->
       </footer>
 
-
+    <% } %>
 </body>
 </html>
+
