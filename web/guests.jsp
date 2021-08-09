@@ -76,9 +76,23 @@
         <div>
             <h4 class="text-center">Listado de Huéspedes</4>
         </div>
+        <table class="table">  
+                <thead>
+                    <tr class="table table-success table-striped">
+                        <th scope="col">Dni</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Profesión</th>
+                        
+                    </tr>
+                </thead>
+                <tbody></tbody>
+        </table>
         <form action="SvGetGuestList" method="GET" >
             <input type="submit" value="Refrescar" class="btn btn-primary px-2"> 
         </form>
+        
     </main>
 
 

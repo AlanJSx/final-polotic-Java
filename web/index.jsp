@@ -12,7 +12,10 @@
     <title>Hotel</title>
 </head>
 <body class="container">  
-  
+    <% 
+        request.getSession().setAttribute("error", ""); 
+    %>
+   
     
     <header>
       <!-- Background image -->
@@ -26,6 +29,7 @@
           <div class="d-flex justify-content-center align-items-center h-100">
             <div class="text-white">
               <h1 class="mb-3">Hotel</h1>
+              <h3 class="mb-3">Bienvenido</h3>
               
               
               
@@ -38,10 +42,10 @@
 
 
     <main>
-        <h2> Bienvenido al Sistema del Hotel </h2>
-        <a href="login.jsp">Iniciar Sesión</a>
         
-        <div class="mx-auto">
+        <p class="text-center mt-3">Para acceder a la administración del Hotel, inicie sesión.</p>
+            
+        <div class="mx-auto text-center">
             <form action="SvLoginPage" method="POST" class="g-3">
         
                 

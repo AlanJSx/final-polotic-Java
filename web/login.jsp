@@ -66,24 +66,37 @@
             <form action="SvLoginPage" method="POST" class="g-3">
                 
 
-                </div>
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="usuarioJsp" class="form-label">Usuario</label>
-                        <input type="text" name="jspUser" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label for="passJsp" class="form-label">Contraseña</label>
-                        <input type="text" name="jspPassword" class="form-control">
-                    </div>
-                </div>
-
-
-
-                
-                <input id="btnConfirmar" type="submit" value="Iniciar Sesión" class="btn-primary px-4">
-            </form>
         </div>
+        <div class="mx-5 px-5">
+
+            <div class="mb-2">
+                <label for="usuarioJsp" class="form-label">Usuario:</label>
+                <input type="text" name="jspUser" class="form-control">
+            </div>
+            <div class="mb-2">
+                <label for="passJsp" class="form-label">Contraseña:</label>
+                <input type="text" name="jspPassword" class="form-control">
+            </div>
+            <div class="mb-2 text-center">
+                 <% 
+                     // agregar condición para alertar sobre el error
+                     String error = (String) request.getSession().getAttribute("alert"); 
+  
+                         
+                 %>
+                         <%= error %>
+                   
+                
+            </div>
+
+            
+        </div>               
+        <div class="text-center">
+            <input id="btnConfirmar" type="submit" value="Iniciar Sesión" class="btn-primary px-5">    
+        </div>      
+        
+            </form>
+        </div
     </main>
 
 
