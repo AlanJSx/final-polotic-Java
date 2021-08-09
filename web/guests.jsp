@@ -1,4 +1,5 @@
 
+<%@page import="Logica.Guest"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="Logica.Reservation"%>
@@ -65,25 +66,19 @@
             <li class="nav-item">
               <a class="nav-link" href="employee.jsp">Empleados</a>
             </li>
-            
-            <li>
-                <a class="nav-link" href="guests.jsp">Lista de Huéspedes </a>
-            </li>
-            <li>
-                <a class="nav-link" href="reservations.jsp">Lista de Reservas </a>
-            </li>
-            <li>
-                <a class="nav-link" href="DatosPrueba.jsp"> | Carga datos Prueba |</a>
-            </li>
-
           </ul>
         </div>
     </nav>
     
 
-    
-    <main>
 
+    <main>
+        <div>
+            <h4 class="text-center">Listado de Huéspedes</4>
+        </div>
+        <form action="SvGetGuestList" method="GET" >
+            <input type="submit" value="Refrescar" class="btn btn-primary px-2"> 
+        </form>
     </main>
 
 

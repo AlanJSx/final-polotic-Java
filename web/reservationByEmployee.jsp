@@ -67,23 +67,66 @@
             </li>
             
             <li>
-                <a class="nav-link" href="guests.jsp">Lista de Huéspedes </a>
+                <a class="nav-link" href="guestList.jsp">Lista de Huéspedes </a>
             </li>
-            <li>
-                <a class="nav-link" href="reservations.jsp">Lista de Reservas </a>
-            </li>
-            <li>
-                <a class="nav-link" href="DatosPrueba.jsp"> | Carga datos Prueba |</a>
-            </li>
-
           </ul>
         </div>
     </nav>
     
+        <div class="mx-auto">
+            <form action="SvReservationByEmployee" method="GET" class="g-3">            
 
+                <div class="row">
+                    <input type="submit" value="Confirmar" class="btn-primary px-2">
+                </div>
+          
+        
+            </form>
+        </div>
     
     <main>
+        <div>
+            <h4>Reservas para el día de hoy</4>    
+        </div>      
+        <div class="">
+            <table class="table">
+                <thead>
+                    <tr class="table table-success table-striped">
+                        <th class="col">Id</th>
+                        <th class="col">Dni</th>
+                        <th class="col">Huesped</th>
+                        <th class="col">Número Habitación</th>
+                        <th class="col">Nombre Habitación</th>
+                        <th class="col">Check-Out</th>
+                    </tr>               
+                </thead>
+                <tbody>
+                    
+                
+                    <% 
+                    
+                    List<Reservation> reservationList = (List) mySession.getAttribute("reservationListEmployee");
+                    for (Reservation reservation : reservationList){
+                        
+                    Controller control = new Controller();    
+                    String resDate = control.convertDatetoString(reservation.getCheckOut());
+                   
+                    %>  
+                
+                    <tr scope="row">   
+                        <td> <%= reservation.getReservationId() %> </td>
+                        <td> <%= reservation.getGuest().getDni() %> </td>
+                        <td> <%= reservation.getGuest().getName() + " " + reservation.getGuest().getLastName() %> </td>
+                        <td> <%= reservation.getRoomId().getRoomNumber()%> </td>
+                        <td> <%= reservation.getRoomId().getRoomName()%> </td>
+                        <td> <%= resDate %> </td>
+                    </tr> 
+                    
+                 <% } %>   
+                </tbody>
 
+            </table>    
+        </div>
     </main>
 
 

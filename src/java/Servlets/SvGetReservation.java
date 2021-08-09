@@ -6,22 +6,22 @@
 package Servlets;
 
 import Logica.Controller;
-import Logica.Employee;
+import Logica.Reservation;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author alanl
  */
-@WebServlet(name = "SvLoginPage", urlPatterns = {"/SvLoginPage"})
-public class SvLoginPage extends HttpServlet {
+@WebServlet(name = "SvGetReservation", urlPatterns = {"/SvGetReservation"})
+public class SvGetReservation extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,7 +34,6 @@ public class SvLoginPage extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
 
     }
 
@@ -50,7 +49,17 @@ public class SvLoginPage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        Controller control = new Controller();
+        String from = request.getParameter("from");
+        String to = request.getParameter("to");
+        
+        
+        List<Reservation> reservationList = control.getReservationListFromTo(from, to);
+        
+        request.getSession().setAttribute("reservationList", reservationList);
+
+        response.sendRedirect("reservationList.jsp");        
     }
 
     /**
@@ -64,33 +73,7 @@ public class SvLoginPage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        Controller control = new Controller();
-           
-        control.adminUser();
-        control.automaticTestData();
-
-        String jspUser = request.getParameter("jspUser");
-        String jspPassword = request.getParameter("jspPassword");
-        
-        boolean validateUser = control.validateUser(jspUser, jspPassword);
-        
-        if (validateUser){
-            HttpSession mySession = request.getSession(true);
-            mySession.setAttribute(("jspUser"), jspUser);
-            
-            // esto no va acá, modificar en lo posible
-            List<Employee> employeeList = control.getEmployeeList();
-            
-            mySession.setAttribute("employeeList", employeeList);
-            
-            response.sendRedirect("HomePage.jsp");
-        } else {
-            response.sendRedirect("login.jsp");
-        }
-        
-        
-        
+        processRequest(request, response);
     }
 
     /**

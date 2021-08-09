@@ -56,8 +56,18 @@ public class PersistenceController {
         return reservationJpa.findReservationEntities();
     }
 
-    public Room getRoomId(int idRoom) {
-        return roomJpa.findRoom(idRoom);
+    public List getEmployeeReservation(){
+        Employee employee = new Employee();
+        return employee.getReservationEmp();
     }
+
+    public Room getRoomId(int id) {
+        return roomJpa.findRoom(id);
+    }
+
+    public Employee getEmployeeById(int id){
+        return employeeJpa.findEmployee(id);
+    }
+
 
 }

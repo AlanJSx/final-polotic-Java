@@ -374,14 +374,97 @@ public class Controller {
         }                             
     }
 
-    public Room getRoom(int id) {
-       
-        return perControl.getRoomId(id);
-        
+    public Room getRoom(int id) {       
+        return perControl.getRoomId(id);      
     }
 
     public List<Guest> getGuestList() {
         return perControl.getGuest();
     }
+    
+    public List getReservationListFromTo(String from, String to){
+        List<Reservation> reservationList = perControl.getReservationList();
+        Date fromDate = convertStrintoDate(from);
+        Date toDate = convertStrintoDate(to);
+        List<Reservation> reservationFromTo = new ArrayList<>();
+        if (!reservationList.isEmpty()){
+            for (Reservation reservation : reservationList){
+                Date checkIn = reservation.getCheckIn();
+                    System.out.println(" Fecha checkIn " + checkIn);
+                    System.out.println(" Fecha desde " + fromDate);
+                    System.out.println(" Fecha Hasta " + toDate);
+                if(checkIn.compareTo(fromDate) >= 0 && checkIn.compareTo(toDate) <= 0){
+                    reservationFromTo.add(reservation);
+                }
+            }
+            return reservationFromTo;
+        } else {
+            return reservationFromTo;
+        }
+    }
+
+    public List<Reservation> getReservationByEmployee(String id) {       
+        int employeeId = Integer.parseInt(id.replace(" ",""));
+        
+        List<Reservation> reservationList = perControl.getReservationList(); 
+        List<Reservation> reservationEmployee = new ArrayList<>();
+        if(!reservationList.isEmpty()){
+            for(Reservation reservation : reservationList){   
+                int employeeFoundId = reservation.getEmployeeId().getEmployeeId();
+                if(employeeFoundId == employeeId){
+                   reservationEmployee.add(reservation);
+                } 
+            }
+        } else {
+            return reservationEmployee;
+        }
+        return reservationEmployee; 
+     
+    }
+
+    public List<Employee> getEmployeeList() {
+        return perControl.getEmployees();
+    }
+    
+    public List<Reservation> getReservationByDateGuest(String from, String to, String guestDni){
+        List<Reservation> reservationFromTo = getReservationListFromTo(from, to);
+        
+        // Creación de nueva lista para evitar errores al usar el metodo remove       
+        List<Reservation> reservationByDateGuest = new ArrayList<>();
+        
+        if (!reservationFromTo.isEmpty()){
+            for(Reservation reservation : reservationFromTo){
+                String guestIdFound = reservation.getGuest().getDni();
+                if(guestIdFound.equals(guestDni)){
+                    reservationByDateGuest.add(reservation);
+                }
+            } 
+            return reservationByDateGuest;
+        } else {
+            return reservationByDateGuest;
+        }
+            
+              
+    }
+    
+    
+    
+    // Carga de datos de prueba
+    public void automaticTestData(){
+        // Habitaciones
+        newRoom("Habitacion 100", 100, 1, "single", 3500);
+        newRoom("Habitacion 105", 105, 2, "doble", 4200);
+        newRoom("Habitacion 108", 108, 1, "triple", 7000);
+        newRoom("Habitacion 200", 200, 2, "max", 12000);
+        newRoom("Habitacion 203", 203, 3, "doble", 5000);
+        
+        // Empleados
+        newEmployee("Empleado 1", "Ape 1 ", "36789123", "2020-12-31", "calle1", "Gerente", "empleado1", "empleado1");
+        newEmployee("Empleado 2", "Ape 2 ", "30789464", "1980-05-21", "calle2", "Recepcionista", "empleado2", "empleado2");
+        newEmployee("Empleado 3", "Ape 3 ", "34654464", "1990-08-28", "calle3", "Recepcionista", "empleado3", "empleado3");
+    
+        
+    }
+    
 }
   
