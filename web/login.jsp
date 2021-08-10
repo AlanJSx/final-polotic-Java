@@ -14,7 +14,7 @@
 <body class="container">  
     <%
         Controller control = new Controller();
-        control.adminUser();
+        // control.adminUser();
         
     %>
     <header>

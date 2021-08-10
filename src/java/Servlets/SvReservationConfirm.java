@@ -74,15 +74,16 @@ public class SvReservationConfirm extends HttpServlet {
         String checkOut = (String) mySession.getAttribute("checkOut");
         int numberPeople = (int) request.getSession().getAttribute("numberPeople");
         
-        int numberNights = 2;  // calcular cantidad de noches
+        
         String selectedRoom = (String) mySession.getAttribute("selectedRoom");
         
         String userEmployee = (String) request.getSession().getAttribute("jspUser");
         
         
         
-        control.newReservationG(dni, checkIn, checkOut, numberPeople, numberNights, selectedRoom, userEmployee);
-
+        control.newReservationG(dni, checkIn, checkOut, numberPeople, selectedRoom, userEmployee);
+        
+        
         
         response.sendRedirect("reservationComplete.jsp");
                      

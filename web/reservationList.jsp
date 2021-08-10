@@ -97,7 +97,7 @@
     
     <main>
         <div>
-            <h4>Reservas para el día de hoy</4>    
+            <h4 class="text-center mt-3 mb-3">Reservas para el rango seleccionado</4>    
         </div>      
         <div class="">
             <table class="table">
@@ -109,6 +109,7 @@
                         <th class="col">Número Habitación</th>
                         <th class="col">Nombre Habitación</th>
                         <th class="col">Check-Out</th>
+                        <th class="col">Eliminar</th>
                     </tr>               
                 </thead>
                 <tbody>
@@ -131,6 +132,11 @@
                         <td> <%= reservation.getRoomId().getRoomNumber()%> </td>
                         <td> <%= reservation.getRoomId().getRoomName()%> </td>
                         <td> <%= resDate %> </td>
+                        <td>
+                            <form action="SvDeleteReservation" method="POST">
+                                <button type="submit" name="deleteReservationId" value="<%=reservation.getReservationId()%>"> Eliminar </button>
+                            </form>
+                        </td>
                     </tr> 
                     
                  <% } %>   

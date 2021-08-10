@@ -152,7 +152,7 @@
                 <div class="row">
                     <input type="submit" value="Confirmar" class="btn-primary px-2">
                 </div>
-                 
+                <input type = "button" value = "Atras" onclick = "history.back ()" class="btn-secondary px-4"> 
             </form>
         </div>
     

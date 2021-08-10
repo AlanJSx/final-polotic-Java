@@ -52,7 +52,7 @@ public class SvGetEmployeeList extends HttpServlet {
                 Controller control = new Controller();
         
         List <Employee> employeeList = control.getEmployeeList();
-        
+        employeeList.remove(0);
         request.getSession().setAttribute("employeeList", employeeList);
         
         response.sendRedirect("employeeList.jsp");

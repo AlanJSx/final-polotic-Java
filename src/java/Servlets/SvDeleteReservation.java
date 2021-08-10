@@ -6,7 +6,6 @@
 package Servlets;
 
 import Logica.Controller;
-import Logica.Employee;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author alanl
  */
-@WebServlet(name = "SvEditEmployee", urlPatterns = {"/SvEditEmployee"})
-public class SvEditEmployee extends HttpServlet {
+@WebServlet(name = "SvDeleteReservation", urlPatterns = {"/SvDeleteReservation"})
+public class SvDeleteReservation extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,7 +32,6 @@ public class SvEditEmployee extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
 
     }
 
@@ -49,23 +47,7 @@ public class SvEditEmployee extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        Controller control = new Controller();
-        
-        String id = request.getParameter("editEmployeeId");        
-        int employeeId = Integer.parseInt(id.replace(" ",""));        
-        Employee employeeFound = control.getEmployee(employeeId);
-           
-        String birthDate = control.convertDateString(employeeFound.getBirthDate());
-        request.getSession().setAttribute("birthDateEmployee", birthDate);
-        
-        request.getSession().setAttribute("employeeFound", employeeFound);
-        
-        response.sendRedirect("employeeEdit.jsp");
-        
-        
-        
-        
+        processRequest(request, response);
     }
 
     /**
@@ -79,7 +61,15 @@ public class SvEditEmployee extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        Controller control = new Controller();
+        String id = request.getParameter("deleteReservationId");        
+        int reservationId = Integer.parseInt(id.replace(" ","")); 
+              
+                
+        control.deleteReservation(reservationId);
+        
+        response.sendRedirect("reservations.jsp");
     }
 
     /**

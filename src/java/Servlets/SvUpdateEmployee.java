@@ -6,7 +6,6 @@
 package Servlets;
 
 import Logica.Controller;
-import Logica.Employee;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author alanl
  */
-@WebServlet(name = "SvEditEmployee", urlPatterns = {"/SvEditEmployee"})
-public class SvEditEmployee extends HttpServlet {
+@WebServlet(name = "SvUpdateEmployee", urlPatterns = {"/SvUpdateEmployee"})
+public class SvUpdateEmployee extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,7 +32,6 @@ public class SvEditEmployee extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
 
     }
 
@@ -49,23 +47,7 @@ public class SvEditEmployee extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        Controller control = new Controller();
-        
-        String id = request.getParameter("editEmployeeId");        
-        int employeeId = Integer.parseInt(id.replace(" ",""));        
-        Employee employeeFound = control.getEmployee(employeeId);
-           
-        String birthDate = control.convertDateString(employeeFound.getBirthDate());
-        request.getSession().setAttribute("birthDateEmployee", birthDate);
-        
-        request.getSession().setAttribute("employeeFound", employeeFound);
-        
-        response.sendRedirect("employeeEdit.jsp");
-        
-        
-        
-        
+        processRequest(request, response);
     }
 
     /**
@@ -79,7 +61,28 @@ public class SvEditEmployee extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                
+        
+        Controller control = new Controller();
+        int employeeId = (int) request.getSession().getAttribute("employeeId");
+        int employeeIdUser = (int) request.getSession().getAttribute("employeeIdUser");
+        String employeeName = request.getParameter("employeeName");
+        String employeeLastName = request.getParameter("employeeLastName");
+        String employeeDni = request.getParameter("employeeDni");
+        String birthDate = request.getParameter("birthDate"); 
+        String adress = request.getParameter("adress");
+        String workPosition = request.getParameter("workPosition");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        
+        control.updateEmployee(employeeId, employeeName, employeeLastName, employeeDni, birthDate, adress, workPosition, employeeIdUser,username, password);
+        
+                
+        
+        response.sendRedirect("employeeList.jsp");
+        
+        
+        
     }
 
     /**

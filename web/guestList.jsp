@@ -112,6 +112,7 @@
                 </tbody>
             </table>
                 <form action="SvGetGuestList" method="GET" >
+                    <input type = "button" value = "Atras" onclick = "history.back ()" class="btn-secondary px-4">
                     <input type="submit" value="Refrescar" class="btn btn-primary px-2"> 
                 </form>
                 

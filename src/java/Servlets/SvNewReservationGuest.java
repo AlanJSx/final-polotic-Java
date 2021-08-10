@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -66,7 +67,7 @@ public class SvNewReservationGuest extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        
+        HttpSession mySession = request.getSession();
         
         Controller control = new Controller();
         
@@ -80,13 +81,14 @@ public class SvNewReservationGuest extends HttpServlet {
         String checkIn = (String) request.getSession().getAttribute("checkIn");
         String checkOut = (String) request.getSession().getAttribute("checkOut");
         int numberPeople = (int) request.getSession().getAttribute("numberPeople");
-        int numberNights = 2;  // calcular cantidad de noches
+        //int numberNights = 2;  // calcular cantidad de noches
+        
         String selectedRoom = (String) request.getSession().getAttribute("selectedRoom");
         
         String userEmployee = (String) request.getSession().getAttribute("jspUser");
        
         try {
-            control.newReservation(dni, name, lastName, adress, career, birthDate, checkIn, checkOut, numberPeople, numberNights, selectedRoom, userEmployee);
+            control.newReservation(dni, name, lastName, adress, career, birthDate, checkIn, checkOut, numberPeople,  selectedRoom, userEmployee);
         } catch (ParseException ex) {
             Logger.getLogger(SvNewReservationGuest.class.getName()).log(Level.SEVERE, null, ex);
         }

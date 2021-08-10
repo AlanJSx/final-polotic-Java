@@ -29,6 +29,7 @@
         Employee employee = (Employee) request.getSession().getAttribute("employeeFound");
         request.getSession().setAttribute("employeeId", employee.getEmployeeId());
         String birthDate = (String) request.getSession().getAttribute("birthDateEmployee");
+        request.getSession().setAttribute("employeeIdUser", employee.getUser().getUserId());
 
     %>
     <header>

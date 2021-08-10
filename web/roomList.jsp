@@ -41,7 +41,7 @@
           <div class="d-flex justify-content-center align-items-center h-100">
             <div class="text-white">
               <h1 class="mb-3">Hotel</h1>
-              <h3 class="mb-3">HomePage</h3>
+              <h3 class="mb-3">Habitaciones</h3>
             </div>
           </div>
         </div>
@@ -56,10 +56,10 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Inicio</a>
+              <a class="nav-link" href="HomePage">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="reservationCheckDate.jsp">Reservas</a>
+              <a class="nav-link" href="reservations.jsp">Reservas</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="rooms.jsp">Habitaciones</a>
@@ -125,6 +125,7 @@
                 </tbody>
             </table>
                 <form action="SvGetRoomList" method="GET" >
+                    <input type = "button" value = "Atras" onclick = "history.back ()" class="btn-secondary px-4">
                     <input type="submit" value="Refrescar" class="btn btn-primary px-2"> 
                 </form>
                 

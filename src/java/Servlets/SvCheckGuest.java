@@ -68,6 +68,7 @@ public class SvCheckGuest extends HttpServlet {
         Controller control = new Controller();
         
         String dni = request.getParameter("dni");
+        request.getSession().setAttribute("dniGuest", dni);
         String selectRoom = (String) request.getSession().getAttribute("selectedRoom");
         int selectRoomId = Integer.parseInt(selectRoom.replace(" ","")); 
         

@@ -85,7 +85,7 @@ public class Controller {
         return false;
     }
     
-    public void newReservation(String dni, String name, String lastName, String adress, String career, String birthDate, String checkIn, String checkOut, int numberPeople, int numberNights, String selectedRoom, String userEmployee) throws ParseException {       
+    public void newReservation(String dni, String name, String lastName, String adress, String career, String birthDate, String checkIn, String checkOut, int numberPeople,  String selectedRoom, String userEmployee) throws ParseException {       
         Date guestCheckIn = convertStrintoDate(checkIn);
         Date guestCheckOut = convertStrintoDate(checkOut);
         
@@ -114,20 +114,27 @@ public class Controller {
             reservation.setGuest(guest);
             reservation.setRoomId(room);
             reservation.setNumberPeople(numberPeople);
-            reservation.setNumberNights(numberNights);
+            
+            int days = daysBetween(guestCheckIn, guestCheckOut);
+            System.out.println("days: " + days);
+            reservation.setNumberNights(days);
 
 
             reservation.setCheckIn(guestCheckIn);
             reservation.setCheckOut(guestCheckOut);
             //reservation.setCheckIn(Date.valueOf(checkIn));
             //reservation.setCheckOut(Date.valueOf(checkOut));
-            reservation.setCost(2);
+            double totalCost = days * getRoomPrice(roomId);
+            reservation.setCost(totalCost);
             reservation.setEmployeeId(employee);
 
             perControl.newReservation(reservation);                                      
 
            
     }
+    public int daysBetween(Date d1, Date d2){
+             return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+     }
     
         /*
             SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
@@ -209,7 +216,7 @@ public class Controller {
     }
     
     
-    public void newReservationG(String dni, String checkIn, String checkOut, int numberPeople, int numberNights, String selectedRoom, String userEmployee) {
+    public void newReservationG(String dni, String checkIn, String checkOut, int numberPeople, String selectedRoom, String userEmployee) {
         
         Guest guest; 
         guest = findGuestByDni(dni);
@@ -230,14 +237,20 @@ public class Controller {
         //int numberPeople = Integer.parseInt(people.replace(" ","")); 
         reservation.setNumberPeople(numberPeople);
         
-        reservation.setNumberNights(numberNights);
+
+        
         Date guestCheckIn = convertStrintoDate(checkIn);
         Date guestCheckOut = convertStrintoDate(checkOut);
         reservation.setCheckIn(guestCheckIn);
         reservation.setCheckOut(guestCheckOut);
+        
+        int days = daysBetween(guestCheckIn, guestCheckOut);
+        System.out.println("days: " + days);
+        reservation.setNumberNights(days);
         //reservation.setCheckIn(Date.valueOf(checkIn));
         //reservation.setCheckOut(Date.valueOf(checkOut));
-        reservation.setCost(2);
+        double totalCost = days * getRoomPrice(roomId);
+        reservation.setCost(totalCost);
         reservation.setEmployeeId(employee);
         
         perControl.newReservation(reservation);        
@@ -384,6 +397,11 @@ public class Controller {
     public Room getRoom(int id) {       
         return perControl.getRoomId(id);      
     }
+    
+    public double getRoomPrice(int id){
+        Room room = getRoom(id);
+        return room.getRoomPrice();
+    }
 
     public List<Guest> getGuestList() {
         return perControl.getGuest();
@@ -430,7 +448,9 @@ public class Controller {
     }
 
     public List<Employee> getEmployeeList() {
-        return perControl.getEmployees();
+        List<Employee> employeeList = perControl.getEmployees();
+       // employeeList.remove(0);
+        return employeeList;
     }
     
     public List<Reservation> getReservationByDateGuest(String from, String to, String guestDni){
@@ -502,6 +522,43 @@ public class Controller {
     public Employee getEmployee(int employeeId) {
         return perControl.getEmployeeById(employeeId);
     }
+
+    public void updateEmployee(int employeeId, String employeeName, String employeeLastName, String employeeDni, String birthDate, String adress, String workPosition, int employeeIdUser,String username, String password) {
+        Employee employee = new Employee();
+        employee.setEmployeeId(employeeId);
+        employee.setName(employeeName);
+        employee.setLastName(employeeLastName);
+        employee.setDni(employeeDni);
+
+        Date birth = convertStrintoDate(birthDate);
+        employee.setBirthDate(birth);
+        employee.setAdress(adress);
+        employee.setWorkPosition(workPosition);
+        
+        User user = new User();
+        System.out.println("usuario "+ username);
+        user.setUserId(employeeIdUser);
+        user.setUserName(username);
+        user.setPassword(password);
+        
+        employee.setUser(user);
+        perControl.updateUser(user);        
+        perControl.updateEmployee(employee);    
+    }
+
+    public Reservation getReservationById(int reservationId) {
+        return perControl.getReservationById(reservationId);
+    }
+
+    public void deleteReservation(int reservationId) {
+        perControl.deleteReservation(reservationId);
+    }
     
+    public void adminUserCount(){
+         int counter = perControl.adminUserCount();
+         if(counter == 0){
+             createHotelAdministrator();
+         }
+    }
 }
   

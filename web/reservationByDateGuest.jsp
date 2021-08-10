@@ -112,6 +112,8 @@
                         <th class="col">Check-In</th>
                         <th class="col">Check-Out</th>
                         <th class="col">Costo Total</th>
+                        
+                        <th class="col">Eliminar</th>
                     </tr>               
                 </thead>
                 <tbody>
@@ -135,6 +137,12 @@
                         <td> <%= resChekIn %> </td>
                         <td> <%= resCheckOut %> </td>
                         <td> <%= reservation.getCost() %> </td>
+
+                        <td>
+                            <form action="SvDeleteReservation" method="POST">
+                                <button type="submit" name="deleteReservationId" value="<%=reservation.getReservationId()%>"> Eliminar </button>
+                            </form>
+                        </td>
                     </tr> 
                     
                  <% } %>   

@@ -88,5 +88,36 @@ public class PersistenceController {
         }
     }
 
+    public void updateEmployee(Employee employee) {
+        try {
+            employeeJpa.edit(employee);
+        } catch (Exception ex) {
+            Logger.getLogger(PersistenceController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
+    public void updateUser(User user) {
+        try {
+            userJpa.edit(user);
+        } catch (Exception ex) {
+            Logger.getLogger(PersistenceController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Reservation getReservationById(int reservationId) {
+        return reservationJpa.findReservation(reservationId);
+    }
+
+    public void deleteReservation(int reservationId) {
+        try {
+            reservationJpa.destroy(reservationId);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(PersistenceController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public int adminUserCount(){
+        return userJpa.getUserCount();
+        
+    }
 }

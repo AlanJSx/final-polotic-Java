@@ -1,3 +1,8 @@
 body {
-    background-color:papayawhip;
+    background-color: #F0B27A;
+}
+
+
+.bodycard {
+    padding: 1rem 10rem 1rem 10rem;
 }

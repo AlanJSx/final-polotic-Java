@@ -82,8 +82,91 @@
     
 
     
-    <main>
-
+    <main class="bodycard">
+        <div class="row row-cols-1 row-cols-md-2 g-4 ">
+          <div class="col">
+              
+            <div class="card">
+                <img src="./assets/images/imagenReservas.jpg" class="card-img-top " alt="reservas">
+              <div class="card-body">
+                <h5 class="card-title text-center">Reservas</h5>
+               
+                    
+                    <ul>
+                        <li>
+                            <a href="reservations.jsp" class="text-reset">  Consultas sobre reservas </a>
+                        </li>
+                        <li>
+                            <a href="reservationCheckDate.jsp" class="text-reset">  Nueva Reserva </a>
+                        </li>
+                    </ul>
+                
+              </div>
+            </div>
+              
+          </div>
+          <div class="col">
+            <div class="card">
+                <img src="./assets/images/imagenHabitaciones.jpg" class="card-img-top" alt="habitaciones">
+              <div class="card-body">
+                <h5 class="card-title">Habitaciones</h5>
+                <ul>
+                    <li>
+                       <a href="newRoom.jsp" class="text-reset">  Nueva Habitación </a>   
+                   </li>
+                   <li>
+                       <a href="rooms.jsp" class="text-reset">  Lista de Habitaciones </a>
+                       
+                   </li>
+               </ul>
+              </div>
+            </div>
+             
+          </div>
+          <div class="col">
+              <a href="guests.jsp" class="text-decoration-none text-reset">  
+            <div class="card">
+                <img src="./assets/images/imagenHuesped.jpg" class="card-img-top" alt="huesped">
+              <div class="card-body">
+                <h5 class="card-title">Huesped</h5>
+                <ul>
+                   <li>
+                       <a href="guests.jsp" class="text-reset">  Lista de Huéspedes </a>
+                   </li>
+               </ul>
+                
+              </div>
+            </div>
+                
+          </div>
+          <div class="col">            
+            <div class="card">
+                 <img src="./assets/images/imagenEmpleados.jpg"  class="card-img-top" alt="Empleados" >
+              <div class="card-body">
+                <h5 class="card-title">Empleados</h5>
+                <ul>
+                    <li>
+                        <a href="newEmployee.jsp" class="text-reset">  Nuevo Empleado </a>   
+                   </li>
+                   <li>
+                       <a href="employee.jsp" class="text-reset"> Lista y edición de Empleados </a>
+                       
+                   </li>
+               </ul>
+              </div>
+               
+            </div>
+                
+          </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        
     </main>
 
 

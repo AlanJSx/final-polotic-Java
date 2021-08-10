@@ -71,13 +71,6 @@
     
     
     <main>
-        <article>
-            <div class="text-center mb-3">
-                <h4>Crear una nueva Habitación</h4>
-                <a href="./newRoom.jsp">Nueva Habitación</a>    
-            </div>
-                
-        </article>
         
         <article class="pt-3">
             <div class="mb-3 mt-3">
@@ -98,6 +91,7 @@
                     <tbody></tbody>
             </table>
             <form action="SvGetRoomList" method="GET" >
+                <input type = "button" value = "Atras" onclick = "history.back ()" class="btn-secondary px-4">
                 <input type="submit" value="Refrescar" class="btn btn-primary px-2"> 
             </form>        
         </article>
