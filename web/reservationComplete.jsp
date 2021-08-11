@@ -65,6 +65,10 @@
             <li class="nav-item">
               <a class="nav-link" href="employee.jsp">Empleados</a>
             </li>
+            
+            <li>
+                <a class="nav-link" href="guests.jsp">Lista de Huéspedes </a>
+            </li>
 
           </ul>
         </div>
@@ -82,9 +86,7 @@
                 <li><p> Profesión:  <%= request.getSession().getAttribute("guestCareer") %> </p></li>
                 <li><p> CheckIn:  <%= request.getSession().getAttribute("checkIn") %> </p></li>
                 <li><p> CheckOut:  <%= request.getSession().getAttribute("checkOut") %> </p></li>
-                <li><p> Cantidad Personas:  <%= request.getSession().getAttribute("numberPeople") %> </p></li>
-                
-                
+                <li><p> Cantidad Personas:  <%= request.getSession().getAttribute("numberPeople") %> </p></li>            
 
             </ul>
         </div>

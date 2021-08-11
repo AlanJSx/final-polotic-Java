@@ -14,7 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="./assets/css/styles.css">
-    <title>Habitaciones</title>
+    <title>Empleados</title>
 </head>
 <body class="container">   
         <%
@@ -59,16 +59,20 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Inicio</a>
+              <a class="nav-link" href="HomePage.jsp">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Reservas</a>
+              <a class="nav-link" href="reservationCheckDate.jsp">Reservas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Habitaciones</a>
+              <a class="nav-link" href="rooms.jsp">Habitaciones</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Empleados</a>
+              <a class="nav-link" href="employee.jsp">Empleados</a>
+            </li>
+            
+            <li>
+                <a class="nav-link" href="guests.jsp">Lista de Huéspedes </a>
             </li>
           </ul>
         </div>

@@ -33,7 +33,7 @@ public class Controller {
 
         case "triple":
             numberPeople = 3;    
-
+        break;
         case "max":
             numberPeople = 6;   
         break;

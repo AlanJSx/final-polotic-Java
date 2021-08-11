@@ -39,7 +39,7 @@
           <div class="d-flex justify-content-center align-items-center h-100">
             <div class="text-white">
               <h1 class="mb-3">Hotel</h1>
-              <h3 class="mb-3">HomePage</h3>
+              <h3 class="mb-3">Reservas</h3>
             </div>
           </div>
         </div>
@@ -54,7 +54,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Inicio</a>
+              <a class="nav-link" href="HomePage.jsp">Inicio</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="reservationCheckDate.jsp">Reservas</a>
@@ -67,7 +67,7 @@
             </li>
             
             <li>
-                <a class="nav-link" href="guestList.jsp">Lista de Huéspedes </a>
+                <a class="nav-link" href="guests.jsp">Lista de Huéspedes </a>
             </li>
           </ul>
         </div>

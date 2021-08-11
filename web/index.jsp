@@ -29,10 +29,7 @@
           <div class="d-flex justify-content-center align-items-center h-100">
             <div class="text-white">
               <h1 class="mb-3">Hotel</h1>
-              <h3 class="mb-3">Bienvenido</h3>
-              
-              
-              
+              <h3 class="mb-3">Bienvenido</h3>        
             </div>
           </div>
         </div>

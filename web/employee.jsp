@@ -52,7 +52,7 @@
               <a class="nav-link" href="HomePage.jsp">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="reservations.jsp">Reservas</a>
+              <a class="nav-link" href="reservationCheckDate.jsp">Reservas</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="rooms.jsp">Habitaciones</a>
@@ -62,7 +62,7 @@
             </li>
             
             <li>
-                <a class="nav-link" href="guestList.jsp">Lista de Huéspedes </a>
+                <a class="nav-link" href="guests.jsp">Lista de Huéspedes </a>
             </li>
           </ul>
         </div>

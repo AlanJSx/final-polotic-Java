@@ -68,7 +68,7 @@ public class SvLoginPage extends HttpServlet {
         Controller control = new Controller();
         control.adminUserCount();   
         //control.adminUser();
-         //ontrol.automaticTestData();
+        //ontrol.automaticTestData();
             
         String jspUser = request.getParameter("jspUser");
         String jspPassword = request.getParameter("jspPassword");
